@@ -4,7 +4,7 @@ node {
       checkout scm
     }
     stage('build') {
-      steps ("build") {
+      step ("build") {
         /* execute commands in the scripts directory */
         sh cmake ..
         sh make -j8
