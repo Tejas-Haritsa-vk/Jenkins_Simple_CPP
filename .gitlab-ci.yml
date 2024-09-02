@@ -1,0 +1,24 @@
+image: localhost:5000/ubuntu-cpptests:16.04
+
+before_script:
+  - rm -Rf build  # Guarantee that tests and coverage are using latest src and tests
+  - mkdir build
+  - cd build
+  - cmake ..
+  - make -j8
+
+run tests:
+  only:
+    - master
+  tags:
+    - cpp
+    - tests
+  script:
+    - ./bin/calculator_tests
+    - ls -l
+    - cd CMakeFiles/calculator_tests.dir/
+    - ls -l
+    - lcov -d . -c -o coverage.info
+    - lcov -r coverage.info */build/* */tests/* */c++/* -o coverageFiltered.info
+    - lcov --list coverageFiltered.info
+  coverage: '/Total:\|\s*([0-9.]+%)\s.*$/'
