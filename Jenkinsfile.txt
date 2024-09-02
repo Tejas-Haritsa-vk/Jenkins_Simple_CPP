@@ -4,12 +4,12 @@ node {
       checkout scm
     }
     stage('build') {
-      cd build
+      sh cd build
+      sh cmake ..
+      sh make -j8
     }
     stage('compile') {
-      cmake ..
-      make -j8
-      echo "cmake complete!"
+      echo "cmake build complete!"
     }
   } finally {
     stage('cleanup') {
