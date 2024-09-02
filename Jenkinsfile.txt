@@ -1,0 +1,19 @@
+node {
+  try {
+    stage('checkout') {
+      checkout scm
+    }
+    stage('build') {
+      cd build
+    }
+    stage('compile') {
+      cmake ..
+      make -j8
+      echo "cmake complete!"
+    }
+  } finally {
+    stage('cleanup') {
+      echo "doing some cleanup..."
+    }
+  }
+}
