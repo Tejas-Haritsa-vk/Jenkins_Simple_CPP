@@ -4,9 +4,11 @@ node {
       checkout scm
     }
     stage('build') {
-      sh cd build
-      sh cmake ..
-      sh make -j8
+      steps ("build") {
+        /* execute commands in the scripts directory */
+        sh cmake ..
+        sh make -j8
+      }
     }
     stage('compile') {
       echo "cmake build complete!"
